@@ -14,40 +14,31 @@ var url = "https://newsapi.org/v2/top-headlines?country=in&category="+category+"
  var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-	var returnedData = JSON.parse(this.responseText);
-	document.getElementById("sports").className=document.getElementById("sports").className.replace("active", " ");
-	document.getElementById("entertainment").className=document.getElementById("entertainment").className.replace("active", " ");
-	document.getElementById("technology").className=document.getElementById("technology").className.replace( "active" ," ");
-	document.getElementById("general").className=document.getElementById("general").className.replace("active"," ");
-	document.getElementById(category).className = document.getElementById(category).className + ' active'; 
-	
-	
-
-// As long as <ul> has a child node, remove it
-
+		var returnedData = JSON.parse(this.responseText);
+		//Tab active class change
+		document.getElementById("sports").className= document.getElementById("sports").className.replace("active", " ");
+		document.getElementById("entertainment").className= document.getElementById("entertainment").className.replace("active", " ");
+		document.getElementById("technology").className= document.getElementById("technology").className.replace( "active" ," ");
+		document.getElementById("general").className= document.getElementById("general").className.replace("active"," ");
+		document.getElementById(category).className = document.getElementById(category).className + ' active'; 
+		
 	if(returnedData.articles) {
 		var newsFeed = document.getElementById('newsFeed');
 		while (newsFeed.hasChildNodes()) {   
-  newsFeed.removeChild(newsFeed.firstChild);
-}  
-		
+			newsFeed.removeChild(newsFeed.firstChild);
+		}
 		for(var i=0;i<returnedData.articles.length;i++) {
-		var mainDiv = document.createElement('div');
-mainDiv.className = 'news-list-item';
-mainDiv.url = returnedData.articles[i].url;
-mainDiv.addEventListener('click', function(event) {
-  window.open(event.currentTarget.url);
-});
-//mainDiv.innerHTML = 	returnedData.articles[i].title;
-
-mainDiv.innerHTML = "<div><div class='header-row'><span class='row-index'>"+(i+1)+".</span><span class='source-name'>"+returnedData.articles[i].source.name+"</span></div><div class='title'>"+ returnedData.articles[i].title + "</div><div class='footer'><span>Headlines - </span><span>" +returnedData.articles[i].publishedAt+"</span></div></div>";
-newsFeed.appendChild(mainDiv);
-
-
+			var mainDiv = document.createElement('div');
+			mainDiv.className = 'news-list-item';
+			mainDiv.url = returnedData.articles[i].url;
+			mainDiv.addEventListener('click', function(event) {
+			  window.open(event.currentTarget.url);
+			});
+			//Creating news tiles here
+			mainDiv.innerHTML = "<div><div class='header-row'><span class='row-index'>"+(i+1)+".</span><span class='source-name'>"+returnedData.articles[i].source.name+"</span></div><div class='title'>"+ returnedData.articles[i].title + "</div><div class='footer'><span>Headlines - </span><span>" +returnedData.articles[i].publishedAt+"</span></div></div>";
+			newsFeed.appendChild(mainDiv);
 		}
 	}
-	
-	
     }
   };
   xhttp.open("GET", url, true);
@@ -55,10 +46,10 @@ newsFeed.appendChild(mainDiv);
   
 }</script>
 <div class="navigation-bar">
-<a id="sports" class="nav-link active" onclick="loadNewsData('sports')" href="#sports">Sports</a>
-<a id="entertainment" class="nav-link" onclick="loadNewsData('entertainment')" href="#entertainment">Entertainment</a>
-<a id="technology" class="nav-link" onclick="loadNewsData('technology')" href="#technology">Technology</a>
-<a id="general" class="nav-link" onclick="loadNewsData('general')"  href="#general">General</a>
+	<a id="sports" class="nav-link active" onclick="loadNewsData('sports')" href="#sports">Sports</a>
+	<a id="entertainment" class="nav-link" onclick="loadNewsData('entertainment')" href="#entertainment">Entertainment</a>
+	<a id="technology" class="nav-link" onclick="loadNewsData('technology')" href="#technology">Technology</a>
+	<a id="general" class="nav-link" onclick="loadNewsData('general')"  href="#general">General</a>
 </div>
 <div id="newsFeed" class="news-feed"></div>
 </body>
